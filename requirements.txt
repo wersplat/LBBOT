@@ -1,0 +1,4 @@
+flask
+pytesseract
+discord.py
+sqlite3
