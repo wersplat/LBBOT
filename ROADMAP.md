@@ -1,8 +1,3 @@
-Here’s the **GitHub Copilot-friendly step-by-step guide** (`ROADMAP.md`) that will be included in the LeaderboardBot package. It's written in a structure Copilot can recognize and assist with auto-completion, especially during GitHub Codespaces or VS Code usage.
-
----
-
-```markdown
 # 🧠 LeaderboardBot Development Roadmap
 
 This file provides a step-by-step implementation plan for **LeaderboardBot**, designed to be easily followed and executed by developers or GitHub Copilot.
@@ -22,105 +17,66 @@ pip install -r requirements.txt
 
 ---
 
-## 🧱 Phase 2: Discord Bot Setup
+## 🚀 Phase 2: Core Feature Development
 
-- [ ] Configure `bot/config.py` with your Discord bot token and target channel ID.
-- [ ] Run the bot with:
-```bash
-python3 bot/main.py
-```
-- [ ] Bot listens for image uploads, runs OCR, and extracts team names + scores.
-- [ ] Automatically determines winner/loser and updates standings in SQLite.
+1. **Implement Leaderboard Logic**:
+   - Navigate to `src/bot/`.
+   - Create a `leaderboard.py` file.
+   - Define a `Leaderboard` class with methods to:
+     - Add users and their scores.
+     - Retrieve top users.
+     - Reset the leaderboard.
 
----
-
-## 🔍 Phase 3: OCR Processing
-
-- [ ] Install Tesseract on your system (`apt install tesseract-ocr` or `brew install tesseract`)
-- [ ] OCR logic is in `ocr/parse.py`
-- [ ] Bot calls `parse_screenshot(image)` on image upload
+2. **Integrate Leaderboard with Bot**:
+   - Update `main.py` to include commands for:
+     - Adding scores.
+     - Viewing the leaderboard.
 
 ---
 
-## 📊 Phase 4: Flask Dashboard Setup
+## 🎨 Phase 3: Dashboard Integration
 
-- [ ] Run dashboard locally:
-```bash
-python3 dashboard/app.py
-```
-- [ ] Routes:
-  - `/dashboard/leaderboard` – Live standings
-  - `/dashboard/games` – Match history
-  - `/dashboard/team/<team>` – Team page
-  - `/dashboard/export/*.json` – Export endpoints
+1. **Set Up Static Files**:
+   - Navigate to `src/dashboard/static/css/`.
+   - Add a `styles.css` file for custom styling.
 
----
+2. **Create Templates**:
+   - Navigate to `src/dashboard/templates/`.
+   - Add an `index.html` file to display the leaderboard.
 
-## 🗃 Phase 5: Database Structure
-
-- [ ] Uses `sqlite3` under `/data/leaderboard.db`
-- [ ] Tables:
-  - `games (team1, score1, team2, score2, winner, timestamp, season)`
-  - `standings (team, wins, losses, season)`
+3. **Connect Dashboard to Backend**:
+   - Update the dashboard code to fetch leaderboard data from the bot.
 
 ---
 
-## 📦 Phase 6: Docker Deployment
+## 🌐 Phase 4: Deployment
 
-- [ ] Build with:
-```bash
-docker-compose up --build
-```
-- [ ] Services:
-  - `bot` – Discord listener
-  - `dashboard` – Flask web UI
-  - `nginx` – Reverse proxy for `/dashboard`
+1. **Containerize the Application**:
+   - Review the `Dockerfile` and `docker-compose.yml`.
+   - Build and run the Docker containers.
 
----
+2. **Deploy to Cloud**:
+   - Choose a cloud provider (e.g., AWS, Azure, or Heroku).
+   - Deploy the bot and dashboard.
 
-## 🌐 Phase 7: Google Sheets Integration
-
-- [ ] Go to `/dashboard/admin/sheets-config`
-- [ ] Fill in:
-  - Google Sheet ID
-  - Service Account Email
-  - Upload credentials JSON
-  - Set export interval (weekly default)
-
-- [ ] Run scheduled exporter:
-```bash
-python3 dashboard/sync_google_sheets.py
-```
+3. **Monitor and Maintain**:
+   - Set up monitoring tools to track performance and errors.
 
 ---
 
-## 🔁 Phase 8: Webhook Sync
+## 🧪 Phase 5: Testing and Debugging
 
-- [ ] Admin-triggered or scheduled sync sends webhook to Discord
-- [ ] Message includes:
-  - Timestamp (`<t:UNIXTIME:f>`)
-  - Admin name
-  - Export type
-  - Sheet link
+1. **Write Unit Tests**:
+   - Navigate to `src/bot/`.
+   - Create a `test_leaderboard.py` file.
+   - Write tests for all methods in the `Leaderboard` class.
 
----
+2. **Run Tests**:
+   - Use `pytest` to execute all tests.
 
-## ✅ Final Notes
-
-- All code is GPLv3 licensed
-- Themes match BodegaCatsGC and Road to $25K branding
-- Full JSON + CSV export enabled for audit and backup
+3. **Debug Issues**:
+   - Use logs and breakpoints to identify and fix issues.
 
 ---
 
-> Use GitHub Copilot to autocomplete function stubs and extend logic in:
-> - `bot/main.py`
-> - `ocr/parse.py`
-> - `db/utils.py`
-> - `dashboard/routes/*.py`
-> - `dashboard/templates/*.html`
-```
-
----
-
-Let me know if you want a preview of `SETUP.md`, too — or any tweaks to fit this better into your workflow!
+This roadmap is designed to guide development step-by-step. GitHub Copilot can assist in generating code snippets, writing tests, and debugging issues at each phase.
